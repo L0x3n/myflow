@@ -1,0 +1,54 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf6ef;
+  --color-card: #ffffff;
+  --color-ink: #3d3a34;
+  --color-soft: #8a8378;
+  --color-faint: #b9b2a6;
+  --color-sage: #7c9a7e;
+  --color-sage-deep: #5f7f63;
+  --color-sage-mist: #eef3ee;
+  --color-amber: #d9a441;
+  --color-amber-mist: #faf1dd;
+  --color-terra: #c4693f;
+  --color-line: #eae3d8;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  background: #faf6ef;
+  color: #3d3a34;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.25s ease-out both;
+}

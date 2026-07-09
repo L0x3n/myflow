@@ -3,6 +3,9 @@
 En andra hjärna för personer med ADHD, autism, stress eller utmattning.
 North Star: **"Minskar detta människors mentala belastning?"**
 
+**Live:** https://l0x3n.github.io/myflow/ (installerbar PWA — "Lägg till på hemskärmen").
+Deploya om med `./deploy.ps1`. Repo: https://github.com/L0x3n/myflow
+
 Se [MASTERPLAN.md](MASTERPLAN.md) för hela planen och [BACKLOG.md](BACKLOG.md) för det som medvetet väntar.
 
 ## Köra lokalt
@@ -34,12 +37,23 @@ och Flow svarar med en enkel offline-heuristik. Perfekt för att testa UI:t dire
    npx supabase functions deploy flow-chat
    ```
 
-## Deploy (Vercel/Netlify)
+## Deploy
 
-Statisk Vite-app: build-kommando `pnpm build`, output `dist/`.
-Sätt `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` som env-variabler i tjänsten
-och lägg till produktions-URL:en i Supabase Redirect URLs.
-`ANTHROPIC_API_KEY` bor ENDAST i Supabase Edge Function secrets — aldrig i frontend.
+Nu: GitHub Pages via `./deploy.ps1` (bygger med base `/myflow/`, force-pushar `dist/`
+till gh-pages). OBS: GitHub Pages är publikt och kan inte läsa `.env` vid bygge —
+kör deployen från en maskin med `.env` ifylld när Supabase ska med i bygget.
+
+Alternativ (masterplanens förstaval när det är dags): Vercel/Netlify — statisk
+Vite-app, build `pnpm build`, output `dist/`, sätt `VITE_SUPABASE_URL` +
+`VITE_SUPABASE_ANON_KEY` som env-variabler där. Lägg till produktions-URL:en i
+Supabase Redirect URLs. `ANTHROPIC_API_KEY` bor ENDAST i Supabase Edge Function
+secrets — aldrig i frontend.
+
+## Notiser (MVP-nivå)
+
+Slås på under Mer → Notiser. Medicin påminns vid schemalagd tid (tills avbockad),
+aktiviteter 30 min innan — medan appen är öppen eller ligger i bakgrunden.
+Äkta push när appen är helt stängd kräver backend-cron: se BACKLOG.md.
 
 ## Struktur
 

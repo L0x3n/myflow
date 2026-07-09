@@ -97,7 +97,7 @@ Navigation: bottenmeny med 4 ikoner (Idag, Flow, Ärenden, Mer).
 - [x] Auth med magic link, skyddade routes (aktiveras när .env finns)
 - [x] Idag-vyn: energifråga, dagens tre, nästa aktivitet, medicin-check, väder
 - [x] Ärenden-vyn: CRUD för ärenden + delsteg + status
-- [ ] Deploy till Vercel/Netlify
+- [x] Deploy: LIVE på https://l0x3n.github.io/myflow/ (GitHub Pages, `./deploy.ps1`; Vercel/Netlify-instruktioner i README när det är dags)
 - **Milstolpe:** Kevin använder appen en hel dag på mobilen.
 
 ### Vecka 2 — Flow AI
@@ -109,12 +109,12 @@ Navigation: bottenmeny med 4 ikoner (Idag, Flow, Ärenden, Mer).
 - **Milstolpe:** En rörig måndagsdump blir en vettig dag med tre prioriterade uppgifter i smart ordning.
 
 ### Vecka 3 — PWA, notiser, polering
-- [ ] PWA: manifest, service worker, installerbar på hemskärm
-- [ ] Push-notiser: medicin (vid schemalagd tid), nästa aktivitet (30 min innan)
+- [x] PWA: manifest, service worker, installerbar på hemskärm (lövikon, autoUpdate)
+- [x] Notiser: medicin (vid schemalagd tid, tills avbockad) + aktivitet (30 min innan) — medan appen är öppen/i bakgrunden; äkta push vid stängd app = BACKLOG
 - [x] "Hjälp mig"-läget
 - [x] Friktionsknapp i inställningar
 - [x] Empatisk "dagen är slut"-hantering: ogjorda uppgifter flyttas tyst till imorgon
-- [ ] Designgenomgång mot avsnitt 3
+- [x] Designgenomgång mot avsnitt 3 (2026-07-09: inga röda ytor — terra endast deadline-idag + riktiga fel; energigrindarna följer §4; alla tomlägen/texter dömer aldrig; mobil 375 px verifierad)
 - **Milstolpe:** Testanvändaren får sitt konto och installerar på hemskärmen.
 
 ### Vecka 4 — Bara lyssna

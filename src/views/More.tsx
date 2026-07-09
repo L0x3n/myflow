@@ -2,6 +2,12 @@ import { useState } from 'react'
 import { useStore } from '../data/store'
 import { cloudMode, supabase } from '../lib/supabase'
 import { getPlace, searchPlace, setPlace } from '../lib/weather'
+import {
+  disableNotifications,
+  enableNotifications,
+  notifyStatus,
+  type NotifyStatus,
+} from '../lib/notify'
 import type { Medication } from '../types'
 
 export default function More({ userEmail }: { userEmail?: string }) {
@@ -12,10 +18,7 @@ export default function More({ userEmail }: { userEmail?: string }) {
       </header>
       <MedsSettings />
       <PlaceSettings />
-      <section className="rounded-2xl bg-card p-5 shadow-sm border border-line">
-        <h2 className="font-medium">Notiser</h2>
-        <p className="mt-1 text-sm text-soft">Påminnelser om medicin och aktiviteter kommer i nästa steg.</p>
-      </section>
+      <NotifySettings />
       <FrictionBox />
       <AccountBox userEmail={userEmail} />
     </div>
@@ -111,13 +114,64 @@ function MedForm({ med, onDone }: { med?: Medication; onDone: () => void }) {
               await store.deleteMedication(med.id)
               onDone()
             }}
-            className="rounded-lg px-3 py-2.5 text-sm text-terra/80"
+            className="rounded-lg px-3 py-2.5 text-sm text-faint"
           >
             Ta bort
           </button>
         )}
       </div>
     </div>
+  )
+}
+
+// -------------------------------------------------------------------- notiser
+
+function NotifySettings() {
+  const [status, setStatus] = useState<NotifyStatus>(notifyStatus())
+
+  return (
+    <section className="rounded-2xl bg-card p-5 shadow-sm border border-line">
+      <h2 className="font-medium">Notiser</h2>
+      {status === 'unsupported' && (
+        <p className="mt-1 text-sm text-soft">Din webbläsare stödjer inte notiser.</p>
+      )}
+      {status === 'blocked' && (
+        <p className="mt-1 text-sm text-soft">
+          Notiser är blockerade i webbläsaren. Tillåt dem för den här sidan i webbläsarens
+          inställningar om du vill ha påminnelser.
+        </p>
+      )}
+      {status === 'off' && (
+        <>
+          <p className="mt-1 text-sm text-soft">
+            Påminnelser om medicin (vid tiden) och aktiviteter (30 min innan).
+          </p>
+          <button
+            onClick={async () => setStatus(await enableNotifications())}
+            className="mt-3 rounded-xl bg-sage px-4 py-2.5 text-sm text-white"
+          >
+            Slå på notiser
+          </button>
+        </>
+      )}
+      {status === 'on' && (
+        <>
+          <p className="mt-1 text-sm text-soft">
+            På — medicin vid tiden, aktiviteter 30 min innan. Fungerar när appen är öppen
+            eller ligger i bakgrunden.
+          </p>
+          <button
+            onClick={() => {
+              disableNotifications()
+              setStatus('off')
+            }}
+            className="mt-3 rounded-xl border border-line px-4 py-2.5 text-sm text-soft"
+          >
+            Stäng av
+          </button>
+        </>
+      )}
+    </section>
   )
 }
 

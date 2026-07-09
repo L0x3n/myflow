@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { StoreProvider, useStore } from './data/store'
 import { cloudMode } from './lib/supabase'
+import { notifyTick } from './lib/notify'
 import AuthGate from './components/AuthGate'
 import Today from './views/Today'
 import FlowChat from './views/FlowChat'
@@ -29,6 +30,7 @@ function Shell({ userId, email }: { userId?: string; email?: string }) {
 
   return (
     <StoreProvider userId={userId}>
+      <NotificationAgent />
       <div className="mx-auto min-h-dvh max-w-md pb-24 font-sans">
         <LoadErrorBanner />
         {view === 'today' && <Today onHelp={() => setFocusOpen(true)} />}
@@ -74,6 +76,19 @@ function Shell({ userId, email }: { userId?: string; email?: string }) {
       </div>
     </StoreProvider>
   )
+}
+
+/** Kollar var 30:e sekund om någon medicin/aktivitet ska påminnas om. */
+function NotificationAgent() {
+  const { snap } = useStore()
+  const snapRef = useRef(snap)
+  snapRef.current = snap
+  useEffect(() => {
+    const id = setInterval(() => notifyTick(snapRef.current), 30_000)
+    notifyTick(snapRef.current)
+    return () => clearInterval(id)
+  }, [])
+  return null
 }
 
 function LoadErrorBanner() {
